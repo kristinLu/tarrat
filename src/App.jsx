@@ -26,11 +26,10 @@ function App() {
               //newCells[fillIndex] = `${word1}\n${word2}`;
               if (i === 0) {
                   newCells[fillIndex] = (
-                      <>
-                        <strong>{word1}</strong>
-                        <br />
-                        {word2}
-                      </>
+                        <div style={{ textAlign: 'center', lineHeight: 1.5 }}>
+                          <div><strong>{word1}</strong></div>
+                          <div>{word2}</div>
+                        </div>
                   );
               } else {
                   newCells[fillIndex] = `${word2}`;
