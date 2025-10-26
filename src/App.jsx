@@ -23,8 +23,19 @@ function App() {
 
           for (let i = 0; i < cellsToFill; i++) {
               const fillIndex = ((index + i) % rows) * columns + Math.floor((index + i) / rows);
-              newCells[fillIndex] = `${word1}\n${word2}`;
-          };
+              //newCells[fillIndex] = `${word1}\n${word2}`;
+              if (i === 0) {
+                  newCells[fillIndex] = (
+                      <>
+                        <strong>{word1}</strong>
+                        <br />
+                        {word2}
+                      </>
+                  );
+              } else {
+                  newCells[fillIndex] = `${word2}`;
+              }
+          }
           setCells(newCells);
           setIndex(index + cellsToFill);
           setWord1("");
@@ -61,7 +72,6 @@ return (
     <>
     <Box sx={{ display: "flex", gap: 4, p: 4 }}>
           <Box sx={{ width: 300, display: "flex", flexDirection: "column", gap: 2 }}>
-            {/* Top section: typography + inputs + first button */}
             <Typography variant="h3" color="primary" gutterBottom>
               Lasitarrojen tulostus
             </Typography>
@@ -98,12 +108,11 @@ return (
               Lisää {fillCount} tarraa
             </Button>
 
-            {/* Bottom section: two buttons side by side */}
             <Box sx={{ display: "flex", justifyContent: "space-between", mt: 1 }}>
               <Button
                 variant="outlined"
                 onClick={handleReset}
-                sx={{ flex: 1, mr: 1 }} // small gap to the right
+                sx={{ flex: 1, mr: 1 }}
               >
                 Tyhjennä
               </Button>
@@ -111,7 +120,7 @@ return (
                 variant="contained"
                 color="success"
                 onClick={() => window.print()}
-                sx={{ flex: 1, ml: 1 }} // small gap to the left
+                sx={{ flex: 1, ml: 1 }}
               >
                 Tulosta
               </Button>
@@ -158,7 +167,6 @@ return (
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  fontWeight: "bold",
                   whiteSpace: "pre-line",
                   backgroundColor: cell ? "#ba68c8" : "white",
                   transition: "background-color 0.9s",
@@ -181,7 +189,7 @@ return (
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
-                            fontWeight: "bold",
+                            flexDirection: "column",
                             whiteSpace: "pre-line",
                           }}
                         >
@@ -212,18 +220,15 @@ return (
             overflow: hidden !important;
           }
 
-          /* Hide everything by default */
           body * {
             visibility: hidden !important;
           }
 
-          /* Only show printable grid and its children */
           .printable-grid,
           .printable-grid * {
             visibility: visible !important;
           }
 
-          /* Ensure printable grid is placed correctly on the page */
           .printable-grid {
             position: absolute !important;
             top: 8mm !important;
@@ -243,14 +248,12 @@ return (
             transform: none !important;
           }
 
-          /* Clean up the outer container */
           .grid-preview-container {
             border: none !important;
             margin: 0 !important;
             padding: 0 !important;
           }
 
-          /* Prevent breaking between cells */
           .grid-cell {
             page-break-inside: avoid !important;
           }
