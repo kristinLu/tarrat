@@ -24,16 +24,29 @@ function App() {
           for (let i = 0; i < cellsToFill; i++) {
               const fillIndex = ((index + i) % rows) * columns + Math.floor((index + i) / rows);
               //newCells[fillIndex] = `${word1}\n${word2}`;
-              if (i === 0) {
+              newCells[fillIndex] = (
+                <div style={{ textAlign: 'center', lineHeight: 1.5, fontSize: '11pt' }}>
+                  {i === 0 ? (
+                    <>
+                      <div><strong>{formatWord1(word1)}</strong></div>
+                      <div>{word2}</div>
+                    </>
+                  ) : (
+                    <div>{word2 || " "}</div>
+                  )}
+                </div>
+              );
+              /*if (i === 0) {
                   newCells[fillIndex] = (
-                        <div style={{ textAlign: 'center', lineHeight: 1.5 }}>
-                          <div><strong>{word1}</strong></div>
+                        <div style={{ textAlign: 'center', lineHeight: 1.5, fontSize: '11pt' }}>
+                          <div><strong>{formatWord1(word1)}</strong></div>
                           <div>{word2}</div>
                         </div>
                   );
               } else {
-                  newCells[fillIndex] = `${word2}`;
-              }
+                  //newCells[fillIndex] = `${word2}`;
+                  newCells[fillIndex] = word2 || " ";
+              }*/
           }
           setCells(newCells);
           setIndex(index + cellsToFill);
@@ -67,9 +80,25 @@ function App() {
             handleAdd();
         };
     };
+
+function formatWord1(input) {
+  if (!input) return "";
+  input = input.toUpperCase();
+  const match = input.match(/^([A-Z]{2})20(\d{2})00(\d+)$/);
+  return match ? `${match[1]}${match[2]}-${match[3]}` : input;
+}
+
 return (
     <>
-    <Box sx={{ display: "flex", gap: 4, p: 4 }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: { xs: "column", md: "column", lg: "row" },
+        gap: 4,
+        p: 4,
+        alignItems: { xs: "center", md: "center", lg: "flex-start" },
+      }}
+    >
           <Box sx={{ width: 300, display: "flex", flexDirection: "column", gap: 2 }}>
             <Typography variant="h3" color="primary" gutterBottom>
               Lasitarrojen tulostus
@@ -125,7 +154,6 @@ return (
               </Button>
             </Box>
           </Box>
-
             <Box
             className="grid-preview-container"
               sx={{
@@ -135,6 +163,17 @@ return (
                 overflow: "hidden",
                 border: "0.5px solid #cccccc",
                 boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
+
+                mt: { xs: 4, md: 0 },
+                transformOrigin: "top center",
+                transform: {
+                    xs: "scale(0.4)",
+                    sm: "scale(0.7)",
+                    md: "scale(0.9)",
+                    lg: "scale(1)",
+                },
+                transition: "transform 0.3s ease",
+
                 "@media print": {
                     border: "none",
                     boxShadow: "none",
@@ -176,7 +215,7 @@ return (
                 }}
               >
                     <AnimatePresence>
-                      {cell && (
+                        {cell && (
                         <motion.div
                           key={cell + i}
                           initial={{ backgroundColor: "#ba68c8", scale: 0.9 }}
@@ -194,7 +233,7 @@ return (
                         >
                           {cell}
                         </motion.div>
-                      )}
+                        )}
                     </AnimatePresence>
               </Box>
             ))}
