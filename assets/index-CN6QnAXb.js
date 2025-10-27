@@ -261,6 +261,9 @@ export default theme;`}function Hv(e){return typeof e=="number"?`${(e*100).toFix
             border: none !important;
             margin: 0 !important;
             padding: 0 !important;
+            width: 210mm !important;
+            height: 297mm !important;
+            transform: none !important;
           }
 
           .grid-cell {
